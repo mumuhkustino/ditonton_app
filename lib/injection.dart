@@ -13,7 +13,7 @@ import 'package:ditonton/domain/usecases/movie/get_now_playing_movies.dart';
 import 'package:ditonton/domain/usecases/movie/get_popular_movies.dart';
 import 'package:ditonton/domain/usecases/movie/get_top_rated_movies.dart';
 import 'package:ditonton/domain/usecases/search/search_tv_series.dart';
-import 'package:ditonton/domain/usecases/tv_series/get_now_playing_tv_series.dart';
+import 'package:ditonton/domain/usecases/tv_series/get_on_the_air_tv_series.dart';
 import 'package:ditonton/domain/usecases/tv_series/get_popular_tv_series.dart';
 import 'package:ditonton/domain/usecases/tv_series/get_top_rated_tv_series.dart';
 import 'package:ditonton/domain/usecases/tv_series/get_tv_series_detail.dart';
@@ -30,10 +30,12 @@ import 'package:ditonton/domain/usecases/search/search_movies.dart';
 import 'package:ditonton/domain/usecases/watchlist/save_watchlist_tv_series.dart';
 import 'package:ditonton/presentation/provider/movie/movie_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/movie/movie_list_notifier.dart';
+import 'package:ditonton/presentation/provider/movie/now_playing_movies_notifier.dart';
 import 'package:ditonton/presentation/provider/search/movie_search_notifier.dart';
 import 'package:ditonton/presentation/provider/movie/popular_movies_notifier.dart';
 import 'package:ditonton/presentation/provider/movie/top_rated_movies_notifier.dart';
 import 'package:ditonton/presentation/provider/search/tv_series_search_notifier.dart';
+import 'package:ditonton/presentation/provider/tv_series/on_the_air_tv_series_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_series/popular_tv_series_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_series/top_rated_tv_series_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_series/tv_series_detail_notifier.dart';
@@ -80,6 +82,11 @@ void init() {
     ),
   );
   locator.registerFactory(
+    () => NowPlayingMoviesNotifier(
+      getNowPlayingMovies: locator(),
+    ),
+  );
+  locator.registerFactory(
     () => WatchlistMovieNotifier(
       getWatchlistMovies: locator(),
     ),
@@ -119,6 +126,11 @@ void init() {
   locator.registerFactory(
     () => TopRatedTvSeriesNotifier(
       getTopRatedTvSeries: locator(),
+    ),
+  );
+  locator.registerFactory(
+    () => OnTheAirTvSeriesNotifier(
+      getOnTheAirTvSeries: locator(),
     ),
   );
   locator.registerFactory(

@@ -5,6 +5,7 @@ import 'package:ditonton/domain/entities/tv_series/tv_series.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/movie/home_movie_page.dart';
 import 'package:ditonton/presentation/pages/search/search_tv_series_page.dart';
+import 'package:ditonton/presentation/pages/tv_series/on_the_air_tv_series_page.dart';
 import 'package:ditonton/presentation/pages/tv_series/popular_tv_series_page.dart';
 import 'package:ditonton/presentation/pages/tv_series/top_rated_tv_series_page.dart';
 import 'package:ditonton/presentation/pages/tv_series/tv_series_detail_page.dart';
@@ -94,9 +95,10 @@ class _HomeTvSeriesPageState extends State<HomeTvSeriesPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'On The Air',
-                style: kHeading6,
+              _buildSubHeading(
+                title: 'On The Air',
+                onTap: () => Navigator.pushNamed(
+                    context, OnTheAirTvSeriesPage.routeName),
               ),
               Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
                 final state = data.onTheAirState;
