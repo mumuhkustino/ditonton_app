@@ -25,10 +25,6 @@ class SearchMoviesPage extends StatelessWidget {
                     .read<MoviesSearchBloc>()
                     .add(OnQueryMoviesChanged(query));
               },
-              // onSubmitted: (query) {
-              //   Provider.of<MovieSearchNotifier>(context, listen: false)
-              //       .fetchMovieSearch(query);
-              // },
               decoration: const InputDecoration(
                 hintText: 'Search title',
                 prefixIcon: Icon(Icons.search),
@@ -49,16 +45,22 @@ class SearchMoviesPage extends StatelessWidget {
                   );
                 } else if (state is MoviesSearchHasData) {
                   final result = state.result;
-                  return Expanded(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.all(8),
-                      itemBuilder: (context, index) {
-                        final movie = result[index];
-                        return MovieCard(movie);
-                      },
-                      itemCount: result.length,
-                    ),
-                  );
+                  if (result.isNotEmpty) {
+                    return Expanded(
+                      child: ListView.builder(
+                        padding: const EdgeInsets.all(8),
+                        itemBuilder: (context, index) {
+                          final movie = result[index];
+                          return MovieCard(movie);
+                        },
+                        itemCount: result.length,
+                      ),
+                    );
+                  } else {
+                    return const Center(
+                      child: Text("The movie you were looking for was not found!"),
+                    );
+                  }
                 } else if (state is MoviesSearchError) {
                   return Center(
                     key: const Key('error_message'),

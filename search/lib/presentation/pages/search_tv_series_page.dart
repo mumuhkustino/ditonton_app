@@ -26,10 +26,6 @@ class SearchTvSeriesPage extends StatelessWidget {
                     .read<TvSeriesSearchBloc>()
                     .add(OnQueryTvSeriesChanged(query));
               },
-              // onSubmitted: (query) {
-              //   Provider.of<TvSeriesSearchNotifier>(context, listen: false)
-              //       .fetchTvSeriesSearch(query);
-              // },
               decoration: const InputDecoration(
                 hintText: 'Search title',
                 prefixIcon: Icon(Icons.search),
@@ -50,16 +46,22 @@ class SearchTvSeriesPage extends StatelessWidget {
                   );
                 } else if (state is TvSeriesSearchHasData) {
                   final result = state.result;
-                  return Expanded(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.all(8),
-                      itemBuilder: (context, index) {
-                        final tvSeries = result[index];
-                        return TvSeriesCard(tvSeries);
-                      },
-                      itemCount: result.length,
-                    ),
-                  );
+                  if (result.isNotEmpty) {
+                    return Expanded(
+                      child: ListView.builder(
+                        padding: const EdgeInsets.all(8),
+                        itemBuilder: (context, index) {
+                          final tvSeries = result[index];
+                          return TvSeriesCard(tvSeries);
+                        },
+                        itemCount: result.length,
+                      ),
+                    );
+                  } else {
+                    return const Center(
+                      child: Text("The tv series you were looking for was not found!"),
+                    );
+                  }
                 } else if (state is TvSeriesSearchError) {
                   return Center(
                     key: const Key('error_message'),
